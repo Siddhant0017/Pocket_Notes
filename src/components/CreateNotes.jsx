@@ -11,10 +11,10 @@ const paletteChoices = [
   { color: "var(--notes-color-6)", name: "Color 6" },
 ];
 
+// In the CreateNotes component, update the props destructuring:
 const CreateNotes = ({
   noteBtnClick,
   noteGroups,
-  setNewNoteGroup,
   setNoteBtnClick,
   setNoteGroups,
 }) => {
@@ -68,15 +68,13 @@ const CreateNotes = ({
       color: selectedColor,
       notes: [],
     };
-    setNewNoteGroup([...noteGroups, newGroup]);
-    localStorage.setItem(
-      "noteGroups",
-      JSON.stringify([...noteGroups, newGroup])
-    );
+    // Update this line to directly set the noteGroups
+    const updatedGroups = [...noteGroups, newGroup];
+    localStorage.setItem("noteGroups", JSON.stringify(updatedGroups));
     setGroupName("");
     setSelectedColor("");
     setNoteBtnClick(false);
-    setNoteGroups(JSON.parse(localStorage.getItem("noteGroups")));
+    setNoteGroups(updatedGroups);
   };
 
   const displayContainer = noteBtnClick ? "flex" : "none";

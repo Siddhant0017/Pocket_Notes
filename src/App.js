@@ -11,12 +11,7 @@ function App() {
       ? JSON.parse(localStorage.getItem("noteGroups"))
       : []
   );
-  const [newNoteGroup, setNewNoteGroup] = useState({
-    id: "",
-    name: "",
-    notes: [],
-    color: "",
-  });
+  // Removed the unused newNoteGroup state
   const [selectedNote, setSelectedNote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [display, setDisplay] = useState(false);
@@ -54,7 +49,6 @@ function App() {
         noteBtnClick={noteBtnClick}
         setNoteBtnClick={setNoteBtnClick}
         noteGroups={noteGroups}
-        setNewNoteGroup={setNewNoteGroup}
         setNoteGroups={setNoteGroups}/>
     </React.Fragment>
   );
