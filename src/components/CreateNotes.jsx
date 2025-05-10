@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/CreateNotes.css";
 
 // This is the Unique color array name
@@ -22,6 +22,26 @@ const CreateNotes = ({
   const [selectedColor, setSelectedColor] = useState("");
   const [nameError, setNameError] = useState(false);
   const [colorError, setColorError] = useState(false);
+  const popupRef = useRef(null);
+
+  // Handle click outside of the popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setNoteBtnClick(false);
+      }
+    };
+
+    // Add event listener when popup is open
+    if (noteBtnClick) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [noteBtnClick, setNoteBtnClick]);
 
   const handleGroupNameChange = (e) => {
     setGroupName(e.target.value);
@@ -63,7 +83,7 @@ const CreateNotes = ({
 
   return (
     <div className="container-body" style={{ display: displayContainer }}>
-      <div className="note-create-box flex">
+      <div className="note-create-box flex" ref={popupRef}>
         <p className="note-create-title">Create New Notes group</p>
         <div className="note-input-row flex flex-row justify-start">
           <label htmlFor="name" className="label">
